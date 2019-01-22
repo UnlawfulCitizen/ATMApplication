@@ -44,10 +44,23 @@ namespace ATMApplication
         }
         public void Withdrawl(int amount)
         {
-            int singles = amount % 5;
-            Withdrawl(1, singles);
+            //lets check to see if amount > total
+            if (amount > TotalValue())
+                return;
+            else
+            {
+              
+            }
 
         }
+        private void Calculate(int amount)
+        {
+            for (int i = 0; i > amount; i++)
+            {
+
+            }
+        }
+
 
     }
 }

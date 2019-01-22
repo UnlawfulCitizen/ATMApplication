@@ -19,7 +19,7 @@ namespace ATMApplication
             atm.List();
             Console.ReadLine();
             atm.Restock();
-            atm.Withdrawl(4);
+            atm.Withdrawl(4000);
             atm.List();
             Console.ReadLine();
 
