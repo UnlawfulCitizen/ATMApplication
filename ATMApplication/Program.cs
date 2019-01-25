@@ -12,15 +12,16 @@ namespace ATMApplication
             //todo add responses
             
             ATM atm = new ATM();
-            atm.Restock();
-            atm.List();
-            Console.WriteLine(atm.TotalValue());
-            atm.Clear();
+            atm.Stock();
+            atm.Withdrawl(2700);
+            atm.ListBills() ;
+            Console.WriteLine(atm.GetTotal());
+           /* atm.Clear();
             atm.List();
             Console.ReadLine();
-            atm.Restock();
+            atm.Stock();
             atm.Withdrawl(4000);
-            atm.List();
+            atm.List();*/
             Console.ReadLine();
 
         }

@@ -1,35 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ATMApplication
 {
     public class ATM
     {
-        Dictionary<int, int> Bills = new Dictionary<int, int>();
-        public void Restock()
+
+        //initialize 
+        private Dictionary<int, int> Bills = new Dictionary<int, int>();
+
+
+    
+        public Dictionary<int,int> Stock()
         {
-            Bills.Add(100, 10);
-            Bills.Add(50, 10);
-            Bills.Add(20, 10);
-            Bills.Add(10, 10);
-            Bills.Add(5, 10);
-            Bills.Add(1, 10);
+            Bills = new Dictionary<int, int>
+            {
+                { 100, 10 },
+                { 50, 10 },
+                { 20, 10 },
+                { 10, 10 },
+                { 5, 10 },
+                { 1, 10 }
+            };
+            return Bills;
         }
-        public int TotalValue()
+        /// <summary>
+        /// Gets Total value in ATM
+        /// </summary>
+        /// <returns></returns>
+        public int GetTotal()
         {
-            int total = 0;
+            int total= new int();
             foreach (var bill in Bills)
             {
                 total += bill.Key * bill.Value;
             }
             return total;
         }
-        public void Clear()
+        
+        public void Clear(Dictionary<int, int> Bills)
         {
             Bills.Clear();
         }
-        public void List()
+        /// <summary>
+        /// Lists bills to Console.WriteLine.
+        /// </summary>
+        public void ListBills()
         {
             Console.WriteLine("Machine balance: ");
             foreach (var bill in Bills)
@@ -37,29 +55,58 @@ namespace ATMApplication
                 Console.WriteLine($"${bill.Key} - {bill.Value}");
             }
         }
-        private void Withdrawl(int bill, int amount)
-        {
-           // if(!Bills.TryGetValue(bill))
-            Bills[bill] -= amount;
-        }
+        
+        /// <summary>
+        /// This function would assume that we have already verified that Bills > amount
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <param name="Bills"></param>
         public void Withdrawl(int amount)
         {
-            //lets check to see if amount > total
-            if (amount > TotalValue())
-                return;
-            else
+            if (amount > 0 && amount <= GetTotal())
             {
-              
-            }
+                List<int> denominations = Bills.Keys.ToList();
 
+                foreach (int bill in denominations)
+                {
+                    int count = amount / bill;
+                    if (count >= Bills[bill])
+                    {
+                        amount -= Bills[bill] * bill;
+                        Bills.Remove(bill);
+                    }
+                    else if (count < Bills[bill] && count !=0)
+                    {
+                        amount -= count * bill;
+                        Bills[bill] -= count;
+                    }
+                    
+                }
+            }
+            else {
+                //todo list errorss \
+            }
         }
-        private void Calculate(int amount)
+        private void calculate(int amount, int[] denominations, int position)
         {
-            for (int i = 0; i > amount; i++)
+            if (amount == 0)
+                return;
+        }
+
+        /*private void Calculate(int amount)
+        {
+            int[] billKeys  = Bills.Keys.ToArray();
+
+            
+            foreach (int i in billKeys)
             {
+                int Count =amount / i;
+                if (Bills[i] >= Count)
+                    Bills[i] -= Count;
 
             }
-        }
+          
+        }*/
 
 
     }
