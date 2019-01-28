@@ -12,7 +12,10 @@ namespace ATMApplication
         private Dictionary<int, int> Bills = new Dictionary<int, int>();
 
 
-    
+        public ATM()
+        {
+            Stock();
+        }
         public Dictionary<int,int> Stock()
         {
             Bills = new Dictionary<int, int>
@@ -40,7 +43,7 @@ namespace ATMApplication
             return total;
         }
         
-        public void Clear(Dictionary<int, int> Bills)
+        public void Clear()
         {
             Bills.Clear();
         }
@@ -55,7 +58,21 @@ namespace ATMApplication
                 Console.WriteLine($"${bill.Key} - {bill.Value}");
             }
         }
-        
+        public void Restock()
+        {
+            Clear();
+            Stock();
+        }
+
+        public void List(int denomination)
+        {
+            //finish me
+
+          //  var bill = Bills.TryGetValue(denomination);
+
+//            Console.WriteLine($"${bill.Key} - {bill.Value}");
+
+        }
         /// <summary>
         /// This function would assume that we have already verified that Bills > amount
         /// </summary>
@@ -84,7 +101,8 @@ namespace ATMApplication
                 }
             }
             else {
-                //todo list errorss \
+                //todo list errorss 
+
             }
         }
         private void calculate(int amount, int[] denominations, int position)
