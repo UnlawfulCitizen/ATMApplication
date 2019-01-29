@@ -58,7 +58,7 @@ namespace ATMApplication
                 Console.WriteLine($"${bill.Key} - {bill.Value}");
             }
         }
-      
+
 
         public object List(int denomination)
         {
@@ -67,7 +67,7 @@ namespace ATMApplication
             return $"{denomination} - 0";
         }
 
-       
+
         /// <summary>
         /// This function would assume that we have already verified that Bills > amount
         /// </summary>
@@ -77,15 +77,19 @@ namespace ATMApplication
             if (amount > 0 && amount <= GetTotal())
             {
                 List<int> denominations = Bills.Keys.ToList();
-                
+                Dictionary<int, int> Transaction = new Dictionary<int, int>();
 
                 foreach (int bill in denominations)
                 {
+                    
                     int count = amount / bill;
                     if (count >= Bills[bill])
                     {
                         amount -= Bills[bill] * bill;
+                       //add key to transaction Transaction.Add(bill);
+
                         Bills.Remove(bill);
+
                     }
                     else if (count < Bills[bill] && count !=0)
                     {

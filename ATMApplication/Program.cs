@@ -29,7 +29,7 @@ namespace ATMApplication
                         atm.List();
                         break;
                     case "I":
-                        for(int i = 1;i < str.Length;i++)
+                        for (int i = 1; i < str.Length; i++)
                         {
                             Console.WriteLine(atm.List(Int32.Parse(str[i])));
                         }
