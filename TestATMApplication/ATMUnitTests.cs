@@ -17,11 +17,26 @@ namespace Tests.UnitTests
         public void CheckValueStarting()
         {
             ATM atm = new ATM();
-            Dictionary<int, int> Bills = new Dictionary<int, int>();
-            Bills = atm.Stock();
-            Assert.AreEqual(1860, atm.TotalValue(Bills));
+            Assert.AreEqual(1860, atm.GetTotal());
+
         }
-        //[Test]
-        //public void 
+        [Test]
+        public void WithdrawlINFError()
+        {
+            ATM atm = new ATM();
+            atm.Withdrawl(208);
+            atm.Withdrawl(9);
+           
+            Assert.AreEqual("Failure: insufficient funds", atm.Withdrawl(9));
+
+        }
+        [Test]
+        public void CheckList()
+        {
+            ATM atm = new ATM();
+            atm.Withdrawl(208);
+            Assert.AreEqual(8, atm.List(100));
+
+        }
     }
 }

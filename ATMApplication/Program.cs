@@ -19,18 +19,19 @@ namespace ATMApplication
 
                 string[] str = Input.Split(' ');
 
-                switch (str[0])
+                switch (str[0].ToUpper())
                 {
                     case "R":
-                        atm.Restock();
+                        atm.Stock();
                         break;
                     case "W":
                         atm.Withdrawl(Int32.Parse(str[1]));
+                        atm.List();
                         break;
                     case "I":
-                        foreach (string s in str)
+                        for(int i = 1;i < str.Length;i++)
                         {
-                            atm.List(Int32.Parse(s));
+                            Console.WriteLine(atm.List(Int32.Parse(str[i])));
                         }
                         break;
                     case "Q":

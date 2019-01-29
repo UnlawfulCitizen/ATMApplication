@@ -8,16 +8,21 @@ namespace ATMApplication
     public class ATM
     {
 
-        //initialize 
+        
         private Dictionary<int, int> Bills = new Dictionary<int, int>();
 
-
+        
         public ATM()
         {
             Stock();
         }
+        /// <summary>
+        /// Empties out the ATM, refills with default amount. 
+        /// </summary>
+        /// <returns></returns>
         public Dictionary<int,int> Stock()
         {
+            Bills.Clear();
             Bills = new Dictionary<int, int>
             {
                 { 100, 10 },
@@ -35,22 +40,17 @@ namespace ATMApplication
         /// <returns></returns>
         public int GetTotal()
         {
-            int total= new int();
+            int total = 0;
             foreach (var bill in Bills)
             {
                 total += bill.Key * bill.Value;
             }
             return total;
-        }
-        
-        public void Clear()
-        {
-            Bills.Clear();
-        }
+        }   
         /// <summary>
-        /// Lists bills to Console.WriteLine.
+        /// Lists bills to Console.
         /// </summary>
-        public void ListBills()
+        public void List()
         {
             Console.WriteLine("Machine balance: ");
             foreach (var bill in Bills)
@@ -58,31 +58,26 @@ namespace ATMApplication
                 Console.WriteLine($"${bill.Key} - {bill.Value}");
             }
         }
-        public void Restock()
+      
+
+        public object List(int denomination)
         {
-            Clear();
-            Stock();
+            if (Bills.TryGetValue(denomination, out int value))
+                return $"${denomination} - {value}";
+            return $"{denomination} - 0";
         }
 
-        public void List(int denomination)
-        {
-            //finish me
-
-          //  var bill = Bills.TryGetValue(denomination);
-
-//            Console.WriteLine($"${bill.Key} - {bill.Value}");
-
-        }
+       
         /// <summary>
         /// This function would assume that we have already verified that Bills > amount
         /// </summary>
         /// <param name="amount"></param>
-        /// <param name="Bills"></param>
-        public void Withdrawl(int amount)
+        public object Withdrawl(int amount)
         {
             if (amount > 0 && amount <= GetTotal())
             {
                 List<int> denominations = Bills.Keys.ToList();
+                
 
                 foreach (int bill in denominations)
                 {
@@ -98,34 +93,19 @@ namespace ATMApplication
                         Bills[bill] -= count;
                     }
                     
+
                 }
+                if (amount > 0)
+                    return "Failure: insufficient funds";
+                else
+                    return $"Success: Dispensed ${amount}";
             }
             else {
-                //todo list errorss 
-
+                return "Failure: insufficient funds";
             }
         }
-        private void calculate(int amount, int[] denominations, int position)
-        {
-            if (amount == 0)
-                return;
-        }
-
-        /*private void Calculate(int amount)
-        {
-            int[] billKeys  = Bills.Keys.ToArray();
-
-            
-            foreach (int i in billKeys)
-            {
-                int Count =amount / i;
-                if (Bills[i] >= Count)
-                    Bills[i] -= Count;
-
-            }
-          
-        }*/
-
+    
+      
 
     }
 }

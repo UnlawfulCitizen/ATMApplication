@@ -7,6 +7,8 @@ namespace ATMApplication
 {
     static class UserInput
     {
+
+
         public static int parseInput(String input)
         {
             /*valid commands 
