@@ -79,6 +79,7 @@ namespace ATMApplication
                 List<int> denominations = Bills.Keys.ToList();
                 Dictionary<int, int> Transaction = new Dictionary<int, int>();
 
+
                 foreach (int bill in denominations)
                 {
                     
@@ -86,8 +87,8 @@ namespace ATMApplication
                     if (count >= Bills[bill])
                     {
                         amount -= Bills[bill] * bill;
-                       //add key to transaction Transaction.Add(bill);
-
+                        //add key to transaction Transaction.Add(bill);
+                        Transaction.Add(bill, count);
                         Bills.Remove(bill);
 
                     }
@@ -95,12 +96,21 @@ namespace ATMApplication
                     {
                         amount -= count * bill;
                         Bills[bill] -= count;
+                        Transaction.Add(bill, count);
                     }
                     
 
                 }
                 if (amount > 0)
+                {
+                    //rollback
+                    foreach (var v in Transaction)
+                    {
+                       
+                        Bills[v.Key] += v.Value;
+                    }
                     return "Failure: insufficient funds";
+                }
                 else
                     return $"Success: Dispensed ${amount}";
             }
