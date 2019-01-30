@@ -9,8 +9,8 @@ namespace ATMApplication
     {
 
         
-        private Dictionary<int, int> Bills = new Dictionary<int, int>();
-
+        private Dictionary<int, int> Drawer = new Dictionary<int, int>();
+ 
         
         public ATM()
         {
@@ -20,10 +20,10 @@ namespace ATMApplication
         /// Empties out the ATM, refills with default amount. 
         /// </summary>
         /// <returns></returns>
-        public Dictionary<int,int> Stock()
+        public void Stock()
         {
-            Bills.Clear();
-            Bills = new Dictionary<int, int>
+            Drawer.Clear();
+            Drawer = new Dictionary<int, int>
             {
                 { 100, 10 },
                 { 50, 10 },
@@ -32,37 +32,38 @@ namespace ATMApplication
                 { 5, 10 },
                 { 1, 10 }
             };
-            return Bills;
         }
+
         /// <summary>
         /// Gets Total value in ATM
         /// </summary>
         /// <returns></returns>
-        public int GetTotal()
+        public int CurrentBalance()
         {
-            int total = 0;
-            foreach (var bill in Bills)
+            int CurrentBalance = 0;
+            foreach (var bill in Drawer)
             {
-                total += bill.Key * bill.Value;
+                CurrentBalance += bill.Key * bill.Value;
             }
-            return total;
+            return CurrentBalance;
         }   
+
         /// <summary>
         /// Lists bills to Console.
         /// </summary>
         public void List()
         {
             Console.WriteLine("Machine balance: ");
-            foreach (var bill in Bills)
+            foreach (int bill in Drawer.Keys)
             {
-                Console.WriteLine($"${bill.Key} - {bill.Value}");
+                List(Drawer[bill]);
             }
         }
 
 
         public object List(int denomination)
         {
-            if (Bills.TryGetValue(denomination, out int value))
+            if (Drawer.TryGetValue(denomination, out int value))
                 return $"${denomination} - {value}";
             return $"{denomination} - 0";
         }
@@ -71,46 +72,49 @@ namespace ATMApplication
         /// <summary>
         /// This function would assume that we have already verified that Bills > amount
         /// </summary>
-        /// <param name="amount"></param>
-        public object Withdrawl(int amount)
+        /// <param name="CashToWithdraw"></param>
+        public object Withdrawl(int CashToWithdraw)
         {
-            int Starting = amount;
-            if (amount > 0 && amount <= GetTotal())
+            //Filters out situations where amount is greater than amount in ATM or 
+            if (CashToWithdraw > 0 && CashToWithdraw <= CurrentBalance())
             {
-                List<int> denominations = Bills.Keys.ToList();
-                Dictionary<int, int> Transaction = new Dictionary<int, int>(Bills);
-                foreach (int bill in denominations)
+                int Starting = CashToWithdraw;
+                Dictionary<int, int> Transaction = new Dictionary<int, int>(Drawer);
+                List<int> denominations = Drawer.Keys.ToList();
+                
+
+                foreach (int denomination in denominations)
                 {
-                    int count = amount / bill;
-                    if (count >= Bills[bill])
+                    int BillsRequired = CashToWithdraw / denomination;
+
+                    if (BillsRequired >= Drawer[denomination])
                     {
-                        amount -= Bills[bill] * bill;
-                        Bills.Remove(bill);
+                        CashToWithdraw -= Drawer[denomination] * denomination;
+                        Drawer.Remove(denomination);
 
                     }
-                    else if (count < Bills[bill] && count !=0)
+                    else if (BillsRequired < Drawer[denomination] && BillsRequired != 0)
                     {
-                        amount -= count * bill;
-                        Bills[bill] -= count;
+                        CashToWithdraw -= BillsRequired * denomination;
+                        Drawer[denomination] -= BillsRequired;
                     }
-                    
-
                 }
-                if (amount > 0)
+                if (CashToWithdraw > 0)
                 {
                     //rollback
-                    Bills = Transaction;
+                    Drawer = Transaction;
                     return "Failure: insufficient funds";
                 }
                 else
                     return $"Success: Dispensed ${Starting}";
             }
-            else {
+            else
+            {
                 return "Failure: insufficient funds";
             }
         }
-    
-      
+
+
 
     }
 }

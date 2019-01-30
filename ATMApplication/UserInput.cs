@@ -7,6 +7,16 @@ namespace ATMApplication
 {
     static class UserInput
     {
+        public static void Parse(String input)
+        {
+            String[] matches = input.Split(" $");
+
+            foreach (var m in matches)
+            {
+                Console.WriteLine(m);
+            }
+
+        }
 
 
         public static int parseInput(String input)

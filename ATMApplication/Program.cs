@@ -15,22 +15,23 @@ namespace ATMApplication
             {
                 //todo fix this
                 Input = Console.ReadLine();
+                //Console.WriteLine(m);
+                                
+                string[] matches = Input.Split(" $");
 
-                string[] str = Input.Split(' ');
-
-                switch (str[0].ToUpper())
+                switch (matches[0].ToUpper())
                 {
                     case "R":
                         atm.Stock();
                         break;
                     case "W":
-                        Console.WriteLine(atm.Withdrawl(Int32.Parse(str[1])));
+                        Console.WriteLine(atm.Withdrawl(Int32.Parse(matches[1])));
                         atm.List();
                         break;
                     case "I":
-                        for (int i = 1; i < str.Length; i++)
+                        for (int i = 1; i < matches.Length; i++)
                         {
-                            Console.WriteLine(atm.List(Int32.Parse(str[i])));
+                            Console.WriteLine(atm.List(Int32.Parse(matches[i])));
                         }
                         break;
                     case "Q":
@@ -41,7 +42,7 @@ namespace ATMApplication
                         break;
                 }
 
-
+            
             }
 
 
