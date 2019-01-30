@@ -74,21 +74,17 @@ namespace ATMApplication
         /// <param name="amount"></param>
         public object Withdrawl(int amount)
         {
+            int Starting = amount;
             if (amount > 0 && amount <= GetTotal())
             {
                 List<int> denominations = Bills.Keys.ToList();
-                Dictionary<int, int> Transaction = new Dictionary<int, int>();
-
-
+                Dictionary<int, int> Transaction = new Dictionary<int, int>(Bills);
                 foreach (int bill in denominations)
                 {
-                    
                     int count = amount / bill;
                     if (count >= Bills[bill])
                     {
                         amount -= Bills[bill] * bill;
-                        //add key to transaction Transaction.Add(bill);
-                        Transaction.Add(bill, count);
                         Bills.Remove(bill);
 
                     }
@@ -96,7 +92,6 @@ namespace ATMApplication
                     {
                         amount -= count * bill;
                         Bills[bill] -= count;
-                        Transaction.Add(bill, count);
                     }
                     
 
@@ -104,15 +99,11 @@ namespace ATMApplication
                 if (amount > 0)
                 {
                     //rollback
-                    foreach (var v in Transaction)
-                    {
-                       
-                        Bills[v.Key] += v.Value;
-                    }
+                    Bills = Transaction;
                     return "Failure: insufficient funds";
                 }
                 else
-                    return $"Success: Dispensed ${amount}";
+                    return $"Success: Dispensed ${Starting}";
             }
             else {
                 return "Failure: insufficient funds";

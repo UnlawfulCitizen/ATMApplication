@@ -7,14 +7,13 @@ namespace ATMApplication
         static void Main(string[] args)
         {
             ATM atm = new ATM();
-            atm.Stock();
             String Input;
             Boolean Exit = false;
 
 
             while (!Exit)
             {
-
+                //todo fix this
                 Input = Console.ReadLine();
 
                 string[] str = Input.Split(' ');
@@ -25,7 +24,7 @@ namespace ATMApplication
                         atm.Stock();
                         break;
                     case "W":
-                        atm.Withdrawl(Int32.Parse(str[1]));
+                        Console.WriteLine(atm.Withdrawl(Int32.Parse(str[1])));
                         atm.List();
                         break;
                     case "I":
