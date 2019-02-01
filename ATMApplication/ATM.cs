@@ -51,13 +51,15 @@ namespace ATMApplication
         /// <summary>
         /// Lists bills to Console.
         /// </summary>
-        public void List()
+        public string List()
         {
-            Console.WriteLine("Machine balance: ");
+            String  output = "Machine balance: \n";
+            
             foreach (int bill in Drawer.Keys)
             {
-                List(Drawer[bill]);
+                output += List(bill) + "\n";
             }
+            return output;
         }
 
 
@@ -65,7 +67,7 @@ namespace ATMApplication
         {
             if (Drawer.TryGetValue(denomination, out int value))
                 return $"${denomination} - {value}";
-            return $"{denomination} - 0";
+            return $"${denomination} - 0";
         }
 
 
@@ -106,12 +108,12 @@ namespace ATMApplication
                     return "Failure: insufficient funds";
                 }
                 else
-                    return $"Success: Dispensed ${Starting}";
+                    return $"Success: Dispensed ${Starting} \n {List()}";
+
             }
             else
-            {
                 return "Failure: insufficient funds";
-            }
+
         }
 
 

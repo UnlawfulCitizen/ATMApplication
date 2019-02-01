@@ -26,7 +26,7 @@ namespace ATMApplication
                         break;
                     case "W":
                         Console.WriteLine(atm.Withdrawl(Int32.Parse(matches[1])));
-                        atm.List();
+                    
                         break;
                     case "I":
                         for (int i = 1; i < matches.Length; i++)
