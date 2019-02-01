@@ -7,11 +7,8 @@ namespace ATMApplication
 {
     public class ATM
     {
-
-        
         private Dictionary<int, int> Drawer = new Dictionary<int, int>();
- 
-        
+
         public ATM()
         {
             Stock();
@@ -83,7 +80,7 @@ namespace ATMApplication
                 int Starting = CashToWithdraw;
                 Dictionary<int, int> Transaction = new Dictionary<int, int>(Drawer);
                 List<int> denominations = Drawer.Keys.ToList();
-                
+
 
                 foreach (int denomination in denominations)
                 {
@@ -108,15 +105,10 @@ namespace ATMApplication
                     return "Failure: insufficient funds";
                 }
                 else
-                    return $"Success: Dispensed ${Starting} \n {List()}";
-
+                    return $"Success: Dispensed ${Starting} \n{List()}";
             }
             else
                 return "Failure: insufficient funds";
-
         }
-
-
-
     }
 }
