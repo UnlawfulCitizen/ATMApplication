@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ATMApplication
 {
@@ -18,6 +19,16 @@ namespace ATMApplication
               
 
                 string[] matches = Input.Split(" $");
+                for (int i = 1; i < matches.Length; i++)
+                {
+                    if (Parse(matches[i]) == 0)
+                    {
+                        matches[0] = "x";
+                    }
+                    
+                }
+
+
 
                 switch (matches[0].ToUpper())
                 {
@@ -25,11 +36,12 @@ namespace ATMApplication
                         atm.Stock();
                         break;
                     case "W":
-                        Console.WriteLine(atm.Withdrawl(Int32.Parse(matches[1])));
+                        for (int i = 1; i < matches.Length; i++)
+                            Console.WriteLine(atm.Withdrawl(Parse(matches[i])));
                         break;
                     case "I":
                         for (int i = 1; i < matches.Length; i++)
-                            Console.WriteLine(atm.List(Int32.Parse(matches[i])));
+                            Console.WriteLine(atm.List(Parse(matches[i])));
                         break;
                     case "Q":
                         Exit = true;
@@ -38,7 +50,15 @@ namespace ATMApplication
                         Console.WriteLine("Failure: Invalid Command");
                         break;
                 }
-            }
+            }    
+        }
+        public static int Parse(string s)
+        {
+            int x = 0;
+            Int32.TryParse(s, out x);
+            return x;
+
         }
     }
+    
 }

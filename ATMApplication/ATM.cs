@@ -62,6 +62,8 @@ namespace ATMApplication
 
         public object List(int denomination)
         {
+            if (denomination == 0)
+                return "";
             if (Drawer.TryGetValue(denomination, out int value))
                 return $"${denomination} - {value}";
             return $"${denomination} - 0";
